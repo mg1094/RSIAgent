@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 486" width="940" height="486" role="img" aria-label="Memory ownership boundaries">
+  <title>Memory ownership boundaries</title>
+  <rect x="0" y="0" width="940" height="486" rx="14" fill="#fdfbf5"/>
+  <path d="M 329.4 186.9 L 610.9 185.0 Q 620.9 186.8 620.7 196.4 L 620.4 261.0 Q 620.8 271.2 610.7 271.8 L 330.6 272.1 Q 320.3 272.7 320.5 262.5 L 319.7 196.3 Q 319.6 185.1 329.4 186.9 Z" fill="#fef3c7" stroke="#92400e" stroke-width="1.9" stroke-linejoin="round"/>
+  <text x="470.0" y="224.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="700" fill="#92400e" text-anchor="middle" letter-spacing="1.5">MEMORY</text>
+  <text x="470.0" y="248.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="500" fill="#78350f" text-anchor="middle">the canonical bank</text>
+  <path d="M 26.4 189.1 L 218.8 188.6 Q 227.0 189.9 226.3 198.1 L 227.6 260.3 Q 226.8 268.7 217.3 268.7 L 25.3 268.8 Q 17.3 269.7 17.5 259.9 L 17.1 197.5 Q 16.2 189.2 26.4 189.1 Z" fill="#e1ecf7" stroke="#4a7ba7" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="122.0" y="219.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#4a7ba7" text-anchor="middle">Actor Agent</text>
+  <text x="122.0" y="241.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">writes, but only</text>
+  <text x="122.0" y="257.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">its own verified learning</text>
+  <path d="M 230.0 229.0 Q 272.2 229.7 314.0 229.0" fill="none" stroke="#4a7ba7" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 314.0 229.0 Q 310.7 226.2 305.9 225.1" fill="none" stroke="#4a7ba7" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 314.0 229.0 Q 309.8 231.8 305.9 232.9" fill="none" stroke="#4a7ba7" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="275.0" y="217.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#4a7ba7" text-anchor="middle">promote</text>
+  <path d="M 721.5 188.9 L 914.0 188.9 Q 922.2 189.1 923.2 198.0 L 923.1 260.5 Q 922.2 268.9 913.8 268.1 L 722.7 268.7 Q 712.4 269.4 712.8 259.3 L 713.1 198.6 Q 713.8 189.1 721.5 188.9 Z" fill="#e4f0e5" stroke="#5b8a63" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="818.0" y="219.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#5b8a63" text-anchor="middle">Curriculum Agent</text>
+  <text x="818.0" y="241.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">read-only, and its</text>
+  <text x="818.0" y="257.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">edits never sync back</text>
+  <path d="M 710.0 229.0 Q 668.4 229.9 626.0 229.0" fill="none" stroke="#5b8a63" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 626.0 229.0 Q 630.5 230.4 634.1 232.9" fill="none" stroke="#5b8a63" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 626.0 229.0 Q 629.9 228.5 634.1 225.1" fill="none" stroke="#5b8a63" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 634.0 230.0 Q 640.2 230.5 646.0 230.0" fill="none" stroke="#fef3c7" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M 660.0 230.0 Q 665.7 230.3 672.0 230.0" fill="none" stroke="#fef3c7" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M 686.0 230.0 Q 691.6 230.7 698.0 230.0" fill="none" stroke="#fef3c7" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M 373.2 30.9 L 565.2 30.6 Q 574.4 29.3 574.6 38.7 L 574.1 101.1 Q 574.2 109.4 566.5 110.6 L 373.5 109.5 Q 365.3 110.2 364.2 100.3 L 365.2 38.4 Q 365.1 29.7 373.2 30.9 Z" fill="#eae6f5" stroke="#7566a0" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="470.0" y="60.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#7566a0" text-anchor="middle">Verifier Agent</text>
+  <text x="470.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">never sees memory,</text>
+  <text x="470.0" y="98.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">reasoning, or logs</text>
+  <path d="M 470.0 110.0 Q 468.2 145.3 470.0 180.0" fill="none" stroke="#6f675b" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="6 6"/>
+  <path d="M 460.0 138.0 Q 470.3 148.2 480.0 158.0" fill="none" stroke="#9a8f7d" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M 460.0 158.0 Q 470.0 147.7 480.0 138.0" fill="none" stroke="#9a8f7d" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="490.0" y="154.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="start">no path</text>
+  <path d="M 373.1 306.0 L 565.5 305.5 Q 575.7 305.1 574.9 315.7 L 574.4 376.8 Q 575.7 385.6 566.5 386.0 L 374.8 386.6 Q 364.1 386.0 365.4 377.0 L 365.1 315.3 Q 364.5 305.7 373.1 306.0 Z" fill="#f4f1e9" stroke="#8a8072" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="470.0" y="336.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#6b6255" text-anchor="middle">Host Harness</text>
+  <text x="470.0" y="358.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">commits at valid boundaries,</text>
+  <text x="470.0" y="374.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">freezes, invokes the evaluator</text>
+  <path d="M 470.0 304.0 Q 467.7 290.8 470.0 278.0" fill="none" stroke="#8a8072" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 470.0 278.0 Q 469.4 281.6 466.1 286.1" fill="none" stroke="#8a8072" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 470.0 278.0 Q 471.8 282.0 473.9 286.1" fill="none" stroke="#8a8072" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="24.0" y="48.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="start">The verifier is handed</text>
+  <text x="24.0" y="65.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="start">an environment and an</text>
+  <text x="24.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="start">instruction. No parameter</text>
+  <text x="24.0" y="99.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="start">carries a transcript.</text>
+  <path d="M 24.0 110.0 Q 87.0 110.9 150.0 110.0" fill="none" stroke="#d8d2c4" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="916.0" y="48.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="end">The curriculum agent is</text>
+  <text x="916.0" y="65.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="end">handed a snapshot object.</text>
+  <text x="916.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="end">It has no commit() method</text>
+  <text x="916.0" y="99.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#8d8577" text-anchor="end">to call.</text>
+  <path d="M 790.0 110.0 Q 852.9 108.3 916.0 110.0" fill="none" stroke="#d8d2c4" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="470.0" y="446.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="600" fill="#3f3a34" text-anchor="middle">None of these boundaries is a prompt instruction.</text>
+  <text x="470.0" y="468.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="600" fill="#92400e" text-anchor="middle">Each is a property of the objects the role is handed.</text>
+</svg>

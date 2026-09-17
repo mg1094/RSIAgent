@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" width="900" height="430" role="img" aria-label="The BRS wave barrier">
+  <title>The BRS wave barrier</title>
+  <rect x="0" y="0" width="900" height="430" rx="14" fill="#fdfbf5"/>
+  <path d="M 308.8 23.5 L 590.4 24.7 Q 600.4 23.4 600.1 33.3 L 600.1 68.8 Q 600.3 78.2 591.4 78.1 L 309.5 78.3 Q 299.2 78.5 300.6 68.9 L 299.4 32.4 Q 299.2 24.7 308.8 23.5 Z" fill="#fef3c7" stroke="#92400e" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="450.0" y="49.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="600" fill="#78350f" text-anchor="middle">one pre-wave memory snapshot</text>
+  <text x="450.0" y="67.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10" font-weight="500" fill="#8a6a45" text-anchor="middle">immutable · identical for every branch</text>
+  <path d="M 450.0 78.0 Q 447.6 91.4 450.0 104.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 165.0 104.0 Q 449.4 105.6 735.0 104.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 165.0 104.0 Q 167.8 115.3 165.0 126.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 165.0 114.0 Q 161.2 119.7 165.0 126.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 165.0 126.0 Q 167.2 122.0 168.5 118.8" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 165.0 126.0 Q 164.6 121.7 161.5 118.8" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 450.0 104.0 Q 452.3 114.9 450.0 126.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 450.0 114.0 Q 448.9 119.8 450.0 126.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 450.0 126.0 Q 450.1 121.8 453.5 118.8" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 450.0 126.0 Q 448.6 122.6 446.5 118.8" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 735.0 104.0 Q 735.4 115.2 735.0 126.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 735.0 114.0 Q 735.6 119.3 735.0 126.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 735.0 126.0 Q 736.3 122.5 738.5 118.8" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 735.0 126.0 Q 733.2 122.4 731.5 118.8" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="70.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10" font-weight="500" fill="#6f675b" text-anchor="start">parallel · isolated</text>
+  <path d="M 78.3 130.7 L 251.3 130.4 Q 259.5 130.3 260.2 138.9 L 260.6 185.8 Q 259.6 194.7 250.5 193.9 L 79.4 194.3 Q 69.7 194.8 69.8 184.9 L 70.8 138.6 Q 69.8 130.7 78.3 130.7 Z" fill="#e1ecf7" stroke="#4a7ba7" stroke-width="1.4" stroke-linejoin="round"/>
+  <text x="165.0" y="157.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#4a7ba7" text-anchor="middle">project A</text>
+  <text x="165.0" y="177.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">own environment</text>
+  <path d="M 364.5 130.4 L 535.5 129.4 Q 545.2 130.4 544.2 138.4 L 545.3 184.2 Q 545.1 194.0 535.5 194.1 L 363.4 193.7 Q 355.8 194.7 354.5 185.3 L 354.3 139.9 Q 355.6 129.2 364.5 130.4 Z" fill="#e1ecf7" stroke="#4a7ba7" stroke-width="1.4" stroke-linejoin="round"/>
+  <text x="450.0" y="157.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#4a7ba7" text-anchor="middle">project B</text>
+  <text x="450.0" y="177.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">own environment</text>
+  <path d="M 649.2 130.8 L 821.2 130.0 Q 829.4 130.6 830.3 138.4 L 830.4 185.5 Q 830.2 194.6 820.2 194.0 L 649.2 193.7 Q 640.7 193.6 640.3 185.8 L 640.7 138.7 Q 640.2 129.6 649.2 130.8 Z" fill="#e1ecf7" stroke="#4a7ba7" stroke-width="1.4" stroke-linejoin="round"/>
+  <text x="735.0" y="157.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="600" fill="#4a7ba7" text-anchor="middle">project C</text>
+  <text x="735.0" y="177.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10.5" font-weight="500" fill="#6f675b" text-anchor="middle">own environment</text>
+  <path d="M 165.0 194.0 Q 163.6 208.6 165.0 224.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 450.0 194.0 Q 450.1 208.6 450.0 224.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 735.0 194.0 Q 736.7 208.3 735.0 224.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 165.0 224.0 Q 450.7 224.5 735.0 224.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 450.0 224.0 Q 453.4 233.3 450.0 242.0" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 450.0 242.0 Q 451.7 238.6 453.9 233.9" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 450.0 242.0 Q 447.9 238.0 446.1 233.9" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 258.8 245.4 L 641.7 245.5 Q 649.4 246.0 650.7 255.0 L 649.4 279.3 Q 650.2 288.3 641.1 287.1 L 259.6 287.6 Q 250.0 288.1 249.1 279.5 L 250.4 254.8 Q 250.4 245.4 258.8 245.4 Z" fill="#e4f0e5" stroke="#5b8a63" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="450.0" y="273.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12" font-weight="600" fill="#5b8a63" text-anchor="middle">every verdict grounded — the barrier</text>
+  <path d="M 450.0 288.0 Q 452.0 301.4 450.0 314.0" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 450.0 314.0 Q 453.2 310.2 453.9 305.9" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 450.0 314.0 Q 447.9 309.6 446.1 305.9" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="70.0" y="310.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="10" font-weight="500" fill="#6f675b" text-anchor="start">serial · cumulative</text>
+  <path d="M 100.2 322.6 L 271.9 322.3 Q 279.7 321.7 279.5 329.8 L 279.5 357.3 Q 279.6 365.5 270.8 365.7 L 101.7 365.4 Q 93.7 366.9 92.4 357.3 L 93.6 329.7 Q 93.7 322.3 100.2 322.6 Z" fill="#fef3c7" stroke="#92400e" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="186.0" y="350.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="600" fill="#78350f" text-anchor="middle">commit 1</text>
+  <path d="M 284.0 344.0 Q 318.7 347.3 352.0 344.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 352.0 344.0 Q 348.7 343.2 344.8 340.5" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 352.0 344.0 Q 348.0 346.7 344.8 347.5" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 365.0 322.1 L 535.7 322.0 Q 542.6 321.6 542.6 330.3 L 543.1 357.6 Q 543.6 365.6 535.3 366.7 L 364.5 366.6 Q 356.3 366.6 357.5 358.0 L 356.4 330.3 Q 357.9 321.6 365.0 322.1 Z" fill="#fef3c7" stroke="#92400e" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="450.0" y="350.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="600" fill="#78350f" text-anchor="middle">commit 2</text>
+  <path d="M 548.0 344.0 Q 582.1 343.8 616.0 344.0" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 616.0 344.0 Q 612.1 342.9 608.8 340.5" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 616.0 344.0 Q 611.8 345.5 608.8 347.5" fill="none" stroke="#3f3a34" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 628.9 322.3 L 798.2 321.5 Q 806.9 321.2 806.6 329.8 L 806.4 357.9 Q 807.7 366.7 798.3 366.1 L 629.8 366.6 Q 621.5 366.3 621.2 358.9 L 621.4 330.2 Q 621.6 322.8 628.9 322.3 Z" fill="#fef3c7" stroke="#92400e" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="714.0" y="350.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="600" fill="#78350f" text-anchor="middle">commit 3</text>
+  <text x="450.0" y="396.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="500" fill="#6f675b" text-anchor="middle">each commit is made against the latest canonical memory</text>
+</svg>

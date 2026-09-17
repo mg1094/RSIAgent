@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 452" width="940" height="452" role="img" aria-label="The three RSIAgent roles and the loop connecting them">
+  <title>The three RSIAgent roles and the loop connecting them</title>
+  <rect x="0" y="0" width="940" height="452" rx="14" fill="#fdfbf5"/>
+  <path d="M 79.9 64.1 L 290.9 63.9 Q 301.1 65.0 300.0 74.2 L 299.3 158.0 Q 300.3 168.3 290.3 168.6 L 79.1 167.6 Q 69.2 166.9 69.1 158.7 L 70.4 73.0 Q 70.1 63.0 79.9 64.1 Z" fill="#e4f0e5" stroke="#5b8a63" stroke-width="1.7" stroke-linejoin="round"/>
+  <text x="185.0" y="97.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#5b8a63" text-anchor="middle">Curriculum Agent</text>
+  <text x="185.0" y="123.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#6f675b" text-anchor="middle">decides what to</text>
+  <text x="185.0" y="142.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#6f675b" text-anchor="middle">explore next</text>
+  <path d="M 361.3 63.4 L 571.0 63.9 Q 581.6 63.4 581.9 74.8 L 582.0 158.3 Q 581.5 167.1 572.0 168.4 L 361.9 167.5 Q 352.6 167.8 353.1 159.1 L 352.7 74.5 Q 352.8 63.8 361.3 63.4 Z" fill="#e1ecf7" stroke="#4a7ba7" stroke-width="1.7" stroke-linejoin="round"/>
+  <text x="467.0" y="97.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#4a7ba7" text-anchor="middle">Actor Agent</text>
+  <text x="467.0" y="123.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#6f675b" text-anchor="middle">acts by writing</text>
+  <text x="467.0" y="142.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#6f675b" text-anchor="middle">executable programs</text>
+  <path d="M 645.0 64.8 L 852.9 63.4 Q 863.2 63.4 864.9 73.9 L 865.1 157.8 Q 863.1 167.0 853.1 168.3 L 644.6 167.5 Q 634.7 167.3 633.1 157.6 L 635.0 74.6 Q 634.1 63.9 645.0 64.8 Z" fill="#eae6f5" stroke="#7566a0" stroke-width="1.7" stroke-linejoin="round"/>
+  <text x="749.0" y="97.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="600" fill="#7566a0" text-anchor="middle">Verifier Agent</text>
+  <text x="749.0" y="123.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#6f675b" text-anchor="middle">inspects the candidate</text>
+  <text x="749.0" y="142.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="500" fill="#6f675b" text-anchor="middle">itself, not the account</text>
+  <path d="M 306.0 116.0 Q 326.4 113.4 346.0 116.0" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 346.0 116.0 Q 341.5 113.6 337.9 112.1" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 346.0 116.0 Q 341.9 119.3 337.9 119.9" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="326.0" y="102.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="500" fill="#6f675b" text-anchor="middle">proposes</text>
+  <path d="M 588.0 116.0 Q 607.7 118.6 628.0 116.0" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 628.0 116.0 Q 623.5 115.2 619.9 112.1" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 628.0 116.0 Q 623.2 118.4 619.9 119.9" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="608.0" y="102.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="500" fill="#6f675b" text-anchor="middle">candidate</text>
+  <path d="M 276.4 285.5 L 657.6 285.6 Q 666.3 285.2 666.6 295.1 L 666.1 376.2 Q 667.9 386.7 656.4 386.2 L 276.7 385.9 Q 266.4 385.3 268.0 376.0 L 267.2 296.8 Q 267.5 287.0 276.4 285.5 Z" fill="#fef3c7" stroke="#92400e" stroke-width="1.9" stroke-linejoin="round"/>
+  <text x="467.0" y="324.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="18" font-weight="700" fill="#92400e" text-anchor="middle" letter-spacing="1.5">MEMORY</text>
+  <text x="467.0" y="349.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="500" fill="#78350f" text-anchor="middle">a directory of files the actor wrote</text>
+  <text x="467.0" y="369.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="12.5" font-weight="500" fill="#78350f" text-anchor="middle">frozen and reused — never a model update</text>
+  <path d="M 749.0 168.0 Q 751.4 252.6 749.0 336.0" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 743.0 336.0 Q 707.9 334.7 673.0 336.0" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 673.0 336.0 Q 678.3 336.6 681.1 339.9" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 673.0 336.0 Q 676.9 335.0 681.1 332.1" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="763.0" y="242.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="500" fill="#6f675b" text-anchor="start">grounded verdict</text>
+  <path d="M 261.0 336.0 Q 142.2 334.9 24.0 336.0" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 24.0 336.0 Q 24.5 182.6 24.0 30.0" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 24.0 30.0 Q 105.1 30.5 185.0 30.0" fill="none" stroke="#3f3a34" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 185.0 30.0 Q 187.1 43.5 185.0 58.0" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 185.0 58.0 Q 185.6 53.4 188.9 49.9" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M 185.0 58.0 Q 181.6 54.2 181.1 49.9" fill="none" stroke="#3f3a34" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="42.0" y="323.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,'Helvetica Neue',Arial,sans-serif" font-size="11.5" font-weight="500" fill="#6f675b" text-anchor="start">what was actually retained</text>
+  <text x="70.0" y="432.0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace" font-size="11.5" font-weight="400" fill="#a89f8d" text-anchor="start">model weights stay fixed throughout</text>
+</svg>

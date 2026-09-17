@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rsiagent"
 version = "0.1.0"
-description = "Autonomous exploration for recursive self-improvement in new environments"
+description = "A from-scratch Python implementation of RSIAgent: autonomous exploration for recursive self-improvement"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
-authors = [{ name = "RSIAgent reimplementation" }]
+authors = [{ name = "miaoguang" }]
 keywords = ["agents", "recursive-self-improvement", "computer-use", "memory", "exploration"]
 classifiers = [
   "Development Status :: 3 - Alpha",

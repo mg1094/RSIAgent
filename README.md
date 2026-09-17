@@ -1,25 +1,22 @@
 # RSIAgent
 
-**Autonomous exploration for recursive self-improvement in new environments.**
+**A from-scratch Python implementation of RSIAgent** — autonomous exploration
+for recursive self-improvement in new environments.
 
 A training-free, multi-agent framework in which a **Curriculum Agent**, an
 **Actor Agent**, and a **Verifier Agent** recursively explore an unfamiliar
 environment and consolidate what they learn into reusable memory — without
 updating model weights.
 
+<p align="center">
+  <img src="docs/assets/roles-loop.svg" width="900"
+       alt="Three agent roles — Curriculum, Actor, Verifier — sitting above a MEMORY box. The curriculum proposes work to the actor, the actor submits a candidate to the verifier, the verifier returns a grounded verdict into memory, and memory feeds back to the curriculum.">
+</p>
+
 [![tests](https://github.com/mg1094/RSIAgent/actions/workflows/tests.yml/badge.svg)](https://github.com/mg1094/RSIAgent/actions/workflows/tests.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![Paper](https://img.shields.io/badge/Paper-arXiv%3A2609.15364-b31b1b.svg)](https://arxiv.org/abs/2609.15364)
-
-> **What this repository is.** An independent, from-scratch Python
-> implementation of the RSIAgent framework described in *RSIAgent: Autonomous
-> Exploration for Recursive Self-improvement in New Environments*
-> ([arXiv:2609.15364](https://arxiv.org/abs/2609.15364)). It implements the
-> paper's reference lifecycle (Algorithm A1) and its stage-ablation protocol,
-> decoupled from the original's QEMU/Docker benchmark harness so it runs
-> anywhere. It is not affiliated with the authors. See
-> [Provenance](#provenance).
 
 ---
 
@@ -90,32 +87,68 @@ Three roles, each with its own context and its own authority:
 
 Two exploration stages, then reuse:
 
-```
-                 ┌──────────────────────────────────────────────┐
-   Phase 1       │  BRS — broad, parallel waves of practice     │
-   Broad         │  branches share one pre-wave memory snapshot │
-                 │  → verdicts grounded → commits serial, in    │
-                 │    the curriculum agent's authored order     │
-                 └──────────────────────────────────────────────┘
-                                     ↓
-                 ┌──────────────────────────────────────────────┐
-   Phase 2       │  DRS — sequential refinement of the target   │
-   Deep          │  attempt → learn → review → practice →       │
-                 │  re-attempt, until the curriculum agent has  │
-                 │  nothing worth practising                    │
-                 └──────────────────────────────────────────────┘
-                                     ↓
-                 ┌──────────────────────────────────────────────┐
-   Phase 3       │  Freeze memory, reset the environment, run   │
-   Reuse         │  the same actor–verifier harness with no     │
-                 │  learning, then a sealed official evaluator  │
-                 └──────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="docs/assets/three-phases.svg" width="960"
+       alt="Three panels. Phase 1, Broad Recursive Self-exploration: three branches run in parallel from one snapshot, then commit serially and cumulatively into memory. Phase 2, Deep Recursive Self-exploration: a loop of target attempt, learn, review and practice. Phase 3, Test-time memory reuse: frozen memory feeding the same actor and verifier harness, with no curriculum, no learning, and sealed scoring.">
+</p>
 
 The full procedure is paper **Algorithm A1**, implemented step for step in
 [`rsiagent/rsi/protocol.py`](rsiagent/rsi/protocol.py). Every module docstring
 in this repository quotes the passage of the paper it implements, so the code
 and the manuscript can be read side by side.
+
+---
+
+## How it works
+
+Three mechanics carry most of the design. Each is enforced by the shape of the
+code rather than requested in a prompt, which is why they hold under a model
+that would rather do something else.
+
+### The wave barrier
+
+Broad exploration acquires experience in parallel and consolidates it serially.
+Every project in a wave opens on the *same* immutable snapshot and cannot see its
+siblings; all verdicts must land before a single commit happens; the commits then
+run one at a time, in the order the curriculum agent authored them, each against
+the memory the previous one just wrote.
+
+The split is what buys throughput without letting two branches write memory from
+a stale read of it. The budget is checked *between* waves, so a wave already
+underway is never truncated — the realized project count can exceed the nominal
+one.
+
+<p align="center">
+  <img src="docs/assets/wave-barrier.svg" width="900"
+       alt="One pre-wave memory snapshot fans out along a bus to three isolated project branches that run in parallel. All three merge into a barrier labelled every verdict grounded. Below it, three commits run left to right, each seeing the previous, into memory.">
+</p>
+
+### Who may touch memory
+
+| Role | Access | Why it cannot do more |
+| --- | --- | --- |
+| Actor | writes, but only its own verified learning | work-phase edits live in a throwaway session that is discarded before learning opens a fresh one |
+| Curriculum | reads a disposable copy | it is handed a snapshot object, which has no `commit()` method to call |
+| Verifier | none at all | it is handed an environment and an instruction; no parameter carries a transcript |
+| Host harness | promotes and freezes | it commits only at valid boundaries and records a tree hash of what it froze |
+
+<p align="center">
+  <img src="docs/assets/memory-ownership.svg" width="940"
+       alt="MEMORY in the centre. The Actor Agent on the left has a promote arrow into it. The Curriculum Agent on the right has a read-only dashed arrow from it. The Verifier Agent above is joined by a dashed line crossed out with an X, labelled no path. The Host Harness below has an arrow up into memory.">
+</p>
+
+The consequence worth stating plainly: **none of these boundaries is a prompt
+instruction.** Each is a property of the objects the role is handed. A verifier
+that wanted to read the actor's reasoning has no parameter through which to
+receive it.
+
+### Unresolved is not a verdict
+
+The verifier can return `UNVERIFIED`, and the protocol treats it as blocking
+rather than as a soft PASS. It grounds no learning, it does not advance a phase,
+and it is never recorded as convergence. Likewise `STALLED` — which buys one
+final target attempt — stays distinguishable from a completed lifecycle, and an
+infrastructure failure is unscored rather than an official zero.
 
 ---
 
@@ -286,6 +319,45 @@ examples.
 
 ---
 
+## Related work
+
+Two neighbouring lines of work are worth naming, plus one pointer. Only the
+first is implemented here.
+
+**RSIAgent** — Zhu, Fan, Wang, Wu, Zhou, Huang.
+*RSIAgent: Autonomous Exploration for Recursive Self-improvement in New
+Environments.* [arXiv:2609.15364](https://arxiv.org/abs/2609.15364), 2026.
+[Website](https://aetherlabsai.github.io/RSIAgent/).
+
+> **This is what the code in this repository implements.** Three agents —
+> curriculum, actor, verifier — explore a new environment under a
+> broad-then-deep strategy, check what they learn against execution, and freeze
+> the resulting memory for downstream tasks. Model weights never change.
+
+**Dream-RSI** — Zheng, Wu, Zhang, He, Zhang, Coleman, Wei, Bai, Liu, Liu, Wang,
+Zhuan, Kang, Xiang, Huang, Cheng, Guo.
+*Dream-RSI: Recursive Self-Improvement through Evolving Worlds.* 2026.
+[Website](https://dream-rsi.com/).
+
+> **Not implemented here.** The two improve different objects. RSIAgent improves
+> the *agent's knowledge of the environment* by accumulating memory. Dream-RSI
+> improves the *exploration procedure itself*: a completed discovery tree is
+> reused as an exact replay simulator over the search space it already reached,
+> so thousands of candidate policies can be scored offline at zero executions,
+> and only the winner is redeployed. One learns what the environment is like;
+> the other learns how to search it.
+
+**Retrieve-for-Train** — Google Research.
+*Bypassing inference bottlenecks: accelerating complex AI search with
+Retrieve-for-Train.*
+[Blog post](https://research.google/blog/bypassing-inference-bottlenecks-accelerating-complex-ai-search-with-retrieve-for-train/).
+
+> **Not implemented here, and not summarised here** — listed as a pointer to a
+> related approach to making search-based discovery cheaper. Consult the post
+> itself; this repository makes no claims about its method.
+
+---
+
 ## Provenance
 
 This is an independent reimplementation of the framework in:
@@ -324,7 +396,7 @@ rsiagent/
   rsi/             phase1_brs · phase2_drs · phase3_eval · protocol (A1)
   cli.py           The command line
 examples/          custom_task (smallest) · offline_demo (full lifecycle)
-docs/              ARCHITECTURE.md · PAPER_MAPPING.md
+docs/              ARCHITECTURE.md · PAPER_MAPPING.md · assets/ (figures)
 tests/             95 tests, no API key required
 ```
 

@@ -1,9 +1,9 @@
 """Command line interface.
 
-    rsiagent demo                      # run the offline demo, no API key needed
-    rsiagent run --task my_task.py:task --config run.json
-    rsiagent inspect runs/latest       # summarise a finished run
-    rsiagent memory runs/latest        # print the frozen memory
+    rsiagent demo                 # run the offline demo, no API key needed
+    rsiagent run --task t.py:task # run a lineage against a task
+    rsiagent inspect runs/latest  # summarise a finished run
+    rsiagent memory runs/latest   # print the frozen memory
 
 ``run`` loads a task from a Python file so a benchmark adapter can live outside
 this package: point ``--task`` at a module path and an attribute name.
