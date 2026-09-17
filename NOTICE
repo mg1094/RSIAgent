@@ -1,0 +1,17 @@
+RSIAgent (independent reimplementation)
+Copyright 2026
+
+This product is an independent reimplementation of the framework described in:
+
+    Sibo Zhu, Shicheng Fan, Xinyue Wang, Wenyi Wu, Kun Zhou, Biwei Huang.
+    "RSIAgent: Autonomous Exploration for Recursive Self-improvement in New
+    Environments." arXiv:2609.15364, 2026.
+    https://arxiv.org/abs/2609.15364
+
+It is not affiliated with, endorsed by, or derived from the source code of the
+original authors' implementation. Short passages of the paper are quoted in
+docstrings and prompt templates for traceability, with attribution.
+
+The repository also refers to third-party benchmarks and systems by name
+(OSWorld, Agents' Last Exam, GameCraft-Bench, Play2Code). No third-party code
+or benchmark assets are bundled here.

@@ -1,0 +1,34 @@
+# Runs: journals, memory banks, provisioned environments, frozen snapshots.
+runs/
+*.journal.jsonl
+
+# Environments created by LocalEnvironmentPool.
+*.baseline/
+*.checkpoints/
+*.private/
+*.sessions/
+*.staging-*/
+*.previous/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

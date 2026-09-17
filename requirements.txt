@@ -1,0 +1,4 @@
+# RSIAgent has no mandatory third-party dependencies: model transport uses
+# urllib and the demo environment uses subprocess.  This file exists so that
+# `pip install -r requirements.txt` in a benchmark environment is a no-op
+# rather than an error.

@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rsiagent"
+version = "0.1.0"
+description = "Autonomous exploration for recursive self-improvement in new environments"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "RSIAgent reimplementation" }]
+keywords = ["agents", "recursive-self-improvement", "computer-use", "memory", "exploration"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Deliberately dependency-free: the whole framework runs on the standard
+# library, including both model clients (urllib) and the demo environment
+# (subprocess).  PyYAML is optional and only needed for YAML configs.
+dependencies = []
+
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1", "ruff>=0.5"]
+
+[project.scripts]
+rsiagent = "rsiagent.cli:main"
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2609.15364"
+Website = "https://aetherlabsai.github.io/RSIAgent/"
+
+[tool.setuptools.packages.find]
+include = ["rsiagent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["error::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = ["E501", "SIM108"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402", "B011"]
