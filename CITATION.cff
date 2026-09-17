@@ -13,8 +13,8 @@ abstract: >-
   decoupled from the original's QEMU/Docker benchmark harness.
 type: software
 license: Apache-2.0
-repository-code: "https://github.com/OWNER/RSIAgent"
-url: "https://github.com/OWNER/RSIAgent"
+repository-code: "https://github.com/mg1094/RSIAgent"
+url: "https://github.com/mg1094/RSIAgent"
 keywords:
   - recursive self-improvement
   - digital agents

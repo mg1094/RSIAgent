@@ -7,7 +7,7 @@ A training-free, multi-agent framework in which a **Curriculum Agent**, an
 environment and consolidate what they learn into reusable memory — without
 updating model weights.
 
-[![tests](https://github.com/OWNER/RSIAgent/actions/workflows/tests.yml/badge.svg)](https://github.com/OWNER/RSIAgent/actions/workflows/tests.yml)
+[![tests](https://github.com/mg1094/RSIAgent/actions/workflows/tests.yml/badge.svg)](https://github.com/mg1094/RSIAgent/actions/workflows/tests.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![Paper](https://img.shields.io/badge/Paper-arXiv%3A2609.15364-b31b1b.svg)](https://arxiv.org/abs/2609.15364)
