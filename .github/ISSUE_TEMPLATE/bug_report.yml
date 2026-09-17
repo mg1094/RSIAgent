@@ -1,0 +1,73 @@
+name: Bug report
+description: Something in the framework does not do what it says it does
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: if this is about the framework executing model-written
+        code on your machine, that is documented behaviour — see
+        [SECURITY.md](../blob/main/SECURITY.md). A *boundary* failing (the
+        verifier reading actor memory, a frozen memory bank accepting a write,
+        a memory path escaping its root) is a real bug and this is the right
+        place for it.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: |
+        A command, a task file, or a test. `python examples/offline_demo/run.py`
+        and `examples/custom_task` are good starting points — a reproduction
+        built on those needs no API key.
+      render: shell
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: "0.1.0, or the output of `git rev-parse HEAD`"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "3.12.9"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: arm
+    attributes:
+      label: Which arm
+      options:
+        - baseline (w/o RSI)
+        - brs-only (w/o DRS)
+        - drs-only (w/o BRS)
+        - rsi / full
+        - not sure / not applicable
+    validations:
+      required: false
+
+  - type: textarea
+    id: journal
+    attributes:
+      label: Journal excerpt
+      description: |
+        If the run produced one, `rsiagent inspect <run_dir>` and the relevant
+        lines of `journal.jsonl` usually explain more than a transcript does.
+      render: text
+    validations:
+      required: false

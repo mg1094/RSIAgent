@@ -171,8 +171,10 @@ def brs_context(
     first_wave: bool,
 ) -> str:
     template = BRS_FIRST_WAVE if first_wave else BRS_CONTEXT
-    return BRS_SYSTEM.format(max_projects=max_projects) + "\n" + template.format(
-        target_query=target_query, memory=memory, outcomes=outcomes
+    return (
+        BRS_SYSTEM.format(max_projects=max_projects)
+        + "\n"
+        + template.format(target_query=target_query, memory=memory, outcomes=outcomes)
     )
 
 
@@ -183,18 +185,20 @@ def drs_context(
     memory: str,
     practice_count: int,
 ) -> str:
-    return DRS_SYSTEM + "\n" + DRS_CONTEXT.format(
-        target_query=target_query,
-        outcome=outcome,
-        diagnosis=diagnosis,
-        memory=memory,
-        practice_count=practice_count,
+    return (
+        DRS_SYSTEM
+        + "\n"
+        + DRS_CONTEXT.format(
+            target_query=target_query,
+            outcome=outcome,
+            diagnosis=diagnosis,
+            memory=memory,
+            practice_count=practice_count,
+        )
     )
 
 
-def render_outcome(
-    label: str, verdict: str, instruction: str, findings: str
-) -> str:
+def render_outcome(label: str, verdict: str, instruction: str, findings: str) -> str:
     return OUTCOME_TEMPLATE.format(
         label=label, verdict=verdict, instruction=instruction, findings=findings.strip()
     )

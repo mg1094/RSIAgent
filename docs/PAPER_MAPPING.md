@@ -183,7 +183,7 @@ Recursive Self-improvement in New Environments.* arXiv:2609.15364, 2026.
 | Figure 1(a) — the recursive loop | `rsi/protocol.py` |
 | Figure 2 — the broad-then-deep framework | `run the offline demo and read its trace` |
 | Figure 3 — partial scores across RSI steps | the journal's `memory_checkpoint` series |
-| Figure 4 / Table A4 — stage ablation | `RunConfig.stages`; `examples/offline_demo/run.py --arm all` |
+| Figure 4 / Appendix C.5 — stage ablation | `RunConfig.stages`; `examples/offline_demo/run.py --arm all --out ...` |
 | Figure A1 — memory accumulation | `Journal.memory_growth()` |
 | Table A1 — agent interfaces | the boundaries table in `docs/ARCHITECTURE.md` |
 | Table A3 — reference configuration | `rsiagent/config.py` defaults |

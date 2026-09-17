@@ -23,7 +23,12 @@ if str(EXAMPLES) not in sys.path:
 from offline_demo.demo_env import TASK, build_evaluator  # noqa: E402
 from offline_demo.offline_llm import build_clients  # noqa: E402
 
-from rsiagent.config import ExecutionLimits, ExplorationConfig, RoleModelConfig, RunConfig  # noqa: E402
+from rsiagent.config import (  # noqa: E402
+    ExecutionLimits,
+    ExplorationConfig,
+    RoleModelConfig,
+    RunConfig,
+)
 from rsiagent.env.pool import LocalEnvironmentPool  # noqa: E402
 from rsiagent.memory.bank import MemoryBank  # noqa: E402
 from rsiagent.rsi.protocol import RSIRunner, run_baseline  # noqa: E402

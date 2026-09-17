@@ -221,7 +221,7 @@ class RunConfig:
     def frozen_memory_path(self) -> Path:
         return self.run_dir / "frozen_memory"
 
-    def replace(self, **changes: Any) -> "RunConfig":
+    def replace(self, **changes: Any) -> RunConfig:
         return replace(self, **changes)
 
     # -- serialisation ----------------------------------------------------
@@ -244,7 +244,7 @@ class RunConfig:
         }
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any], *, base_dir: Path | None = None) -> "RunConfig":
+    def from_dict(cls, data: dict[str, Any], *, base_dir: Path | None = None) -> RunConfig:
         base = base_dir or Path.cwd()
 
         def _path(value: str | None, default: str) -> Path:
@@ -276,9 +276,7 @@ class RunConfig:
             observer=observer,
             workspace=_path(data.get("workspace"), "workspace"),
             run_dir=_path(data.get("run_dir"), "runs/latest"),
-            memory_root=(
-                _path(data["memory_root"], "memory") if data.get("memory_root") else None
-            ),
+            memory_root=(_path(data["memory_root"], "memory") if data.get("memory_root") else None),
             exploration=ExplorationConfig(**data.get("exploration", {})),
             limits=ExecutionLimits(**data.get("limits", {})),
             stages=frozenset(data.get("stages", ("brs", "drs", "eval"))),

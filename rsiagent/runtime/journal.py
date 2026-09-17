@@ -12,11 +12,13 @@ learning loop.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import time
+from collections.abc import Callable
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from ..memory.bank import MemoryStats
 
@@ -99,10 +101,10 @@ class Journal:
         self._handle.write(entry.to_json() + "\n")
         self._handle.flush()
         if self._on_event is not None:
-            try:
+            # Observers are best-effort: journaling is bookkeeping, and a broken
+            # narrator must never take down a lineage.
+            with contextlib.suppress(Exception):
                 self._on_event(entry)
-            except Exception:  # pragma: no cover - observers are best-effort
-                pass
         return entry
 
     def log_memory(
@@ -140,7 +142,7 @@ class Journal:
         if not self._handle.closed:
             self._handle.close()
 
-    def __enter__(self) -> "Journal":
+    def __enter__(self) -> Journal:
         return self
 
     def __exit__(self, *exc: object) -> None:
@@ -150,7 +152,7 @@ class Journal:
 class NullJournal(Journal):
     """A journal that writes nowhere.  For tests and dry runs."""
 
-    def __init__(self) -> None:  # noqa: super-init-not-called
+    def __init__(self) -> None:  # noqa: D107
         self.path = Path("/dev/null")
         self._seq = 0
 

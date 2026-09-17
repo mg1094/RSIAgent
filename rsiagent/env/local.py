@@ -33,8 +33,8 @@ import subprocess
 import sys
 import time
 import uuid
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from ..errors import CheckpointError, EnvironmentError_
 from .base import Environment, ExecResult, Observation, ProgramKind
@@ -149,8 +149,7 @@ class LocalWorkspaceEnvironment(Environment):
     ) -> ExecResult:
         if not self.allow_execution:
             raise EnvironmentError_(
-                "program execution is disabled for this environment "
-                "(allow_execution=False)"
+                "program execution is disabled for this environment (allow_execution=False)"
             )
         timeout = timeout or self.program_timeout_s
         self._step += 1

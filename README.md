@@ -7,6 +7,11 @@ A training-free, multi-agent framework in which a **Curriculum Agent**, an
 environment and consolidate what they learn into reusable memory — without
 updating model weights.
 
+[![tests](https://github.com/OWNER/RSIAgent/actions/workflows/tests.yml/badge.svg)](https://github.com/OWNER/RSIAgent/actions/workflows/tests.yml)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![Paper](https://img.shields.io/badge/Paper-arXiv%3A2609.15364-b31b1b.svg)](https://arxiv.org/abs/2609.15364)
+
 > **What this repository is.** An independent, from-scratch Python
 > implementation of the RSIAgent framework described in *RSIAgent: Autonomous
 > Exploration for Recursive Self-improvement in New Environments*
@@ -24,6 +29,7 @@ No API key, no network, no VM — one command runs the entire three-stage
 lifecycle against a real environment with real subprocesses:
 
 ```bash
+pip install -e .          # optional; the demo also runs from a checkout
 python examples/offline_demo/run.py
 ```
 
@@ -132,9 +138,11 @@ task = TaskQuery(
     fixtures={"work/report.xlsx": open("seed/report.xlsx", "rb").read().decode("latin-1")},
 )
 
+
 def _formulas_resolve(environment) -> float:
     ...
     return 1.0
+
 
 evaluator = ScriptedEvaluator({"formulas_resolve": _formulas_resolve})
 ```
@@ -154,6 +162,31 @@ rsiagent memory  runs/latest
 | `drs-only` | DRS + eval | `w/o BRS` |
 | `rsi` / `full` | all three | Full RSI |
 
+### Running without a model
+
+To watch the protocol before spending a token on it, supply the three roles as
+plain functions with `--policies`. The lifecycle, environment, verifier
+checkpointing, and memory commits are all real; only the text generation is
+yours:
+
+```bash
+cd examples/custom_task
+rsiagent run --task task.py:task --evaluator task.py:evaluator \
+             --policies policies.py:policies --arm rsi --out runs/rsi
+```
+
+[`examples/custom_task/`](examples/custom_task/) is that pattern in full — the
+smallest complete task, and the recommended place to start reading. It is about
+120 lines and the interesting part is one line:
+
+```python
+value = "42" if MEMORY_FACT in _memory_text(messages) else "41"
+```
+
+Nothing about the model changes between the failing attempt and the passing one.
+A file the actor wrote while learning from the first attempt came back in the
+second attempt's prompt. That is the entire claim of the framework.
+
 ### Configuration
 
 Every setting from the paper's Table A3 is a field with the manuscript's value
@@ -161,13 +194,13 @@ as its default:
 
 ```python
 RunConfig(
-    actor=RoleModelConfig(model="glm-5.3"),          # paper default
+    actor=RoleModelConfig(model="glm-5.3"),  # paper default
     verifier=RoleModelConfig(model="kimi-k3"),
     curriculum=RoleModelConfig(model="kimi-k3"),
     exploration=ExplorationConfig(
-        brs_project_budget=8,        # nominal; checked at wave boundaries only
-        brs_concurrency=4,           # concurrency limit, not a wave width
-        stop_policy="curriculum_review",   # vs "verifier_pass"
+        brs_project_budget=8,  # nominal; checked at wave boundaries only
+        brs_concurrency=4,  # concurrency limit, not a wave width
+        stop_policy="curriculum_review",  # vs "verifier_pass"
     ),
     limits=ExecutionLimits(target_iterations=500, program_timeout_s=600.0),
 )
@@ -214,20 +247,29 @@ class MyEnvironment(Environment):
 | --- | --- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Module map, the role boundaries, and why each is enforced structurally |
 | [`docs/PAPER_MAPPING.md`](docs/PAPER_MAPPING.md) | Paper section / Algorithm / Prompt → the code that implements it |
-| [`examples/offline_demo/`](examples/offline_demo/) | The runnable walkthrough |
+| [`examples/custom_task/`](examples/custom_task/) | Smallest complete task, end to end |
+| [`examples/offline_demo/`](examples/offline_demo/) | The full lifecycle with a discoverable environment |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Setup, and what this project considers a good change |
+| [`SECURITY.md`](SECURITY.md) | Read before pointing this at a real model |
+
+Every module docstring quotes the passage of the paper it implements, so the
+code and the manuscript can be read side by side.
 
 ---
 
 ## Testing
 
 ```bash
-pip install -r requirements-dev.txt
-pytest
+pip install -e ".[dev]"
+pytest            # 95 tests, ~17s, no API key, no network
+ruff check . && ruff format --check .
 ```
 
-83 tests, no API key required. They run real environments and real subprocesses,
-so they cover the paths a benchmark run takes rather than mocks of them. The
-suite is organised around the invariants that are easy to get subtly wrong:
+Or `make test` / `make lint`.
+
+The tests run real environments and real subprocesses, so they cover the paths a
+benchmark run takes rather than mocks of them. The suite is organised around the
+invariants that are easy to get subtly wrong:
 
 | File | Pins |
 | --- | --- |
@@ -236,7 +278,11 @@ suite is organised around the invariants that are easy to get subtly wrong:
 | `test_harness.py` | Checkpoint-protected verification, revision-on-FAIL, the verifier's information boundary |
 | `test_memory.py` | Memory ownership: work-phase edits discarded, commits promoted, frozen memory read-only |
 | `test_learning.py` | Distillation → reconciliation → diagnosis, and refusal to learn from UNVERIFIED |
+| `test_cli.py` | The documented `run` / `inspect` / `memory` / `validate` paths |
 | `test_offline_demo.py` | End-to-end: the whole lifecycle, four times, with the paper's stage ordering |
+
+CI runs all of it on Python 3.10, 3.11, and 3.12, plus the two documented
+examples.
 
 ---
 
@@ -260,15 +306,58 @@ QEMU images, guest transport, and sealed graders) are *not* reproduced; the
 `Environment`, `Evaluator`, and `LLMClient` protocols are the seams where a
 benchmark adapter or a different model provider attaches.
 
+## Repository layout
+
+```text
+rsiagent/
+  config.py        RunConfig and the paper's Table A3 defaults; the stage switch
+  status.py        Verdict · Decision · TerminalStatus · Phase
+  parsing.py       Model output → protocol state
+  llm/             Model transport: OpenAI-compatible, Anthropic, offline
+  env/             The Environment protocol and a local implementation
+  memory/          The bank, snapshots, sessions, freezing, tree hashing
+  prompts/         Every role's prompt, with the paper's quotes marked
+  tasks/           TaskQuery · Project · TaskScore · the sealed Evaluator
+  agents/          Contexts, and the actor / verifier / curriculum agents
+  learning/        Distillation → reconciliation → diagnosis
+  runtime/         The action–verification harness, and the journal
+  rsi/             phase1_brs · phase2_drs · phase3_eval · protocol (A1)
+  cli.py           The command line
+examples/          custom_task (smallest) · offline_demo (full lifecycle)
+docs/              ARCHITECTURE.md · PAPER_MAPPING.md
+tests/             95 tests, no API key required
+```
+
+---
+
+## Status and scope
+
+**What works:** the full Algorithm A1 lifecycle, the four stage-ablation
+conditions, memory ownership and freezing, a runnable offline demo, and a CLI.
+
+**What is deliberately not here:** the benchmark integrations. Reproducing the
+paper's reported scores needs OSWorld 2.0 and Agents' Last Exam — their VM
+images, guest transport, and sealed graders — which are large, separately
+licensed, and tied to a specific host setup. The `Environment`, `Evaluator`, and
+`LLMClient` protocols are the seams where such an adapter attaches; a PR adding
+one is welcome.
+
+**What this has never done:** been run against a frontier model. Every execution
+path is exercised by the test suite against deterministic policies, and the
+model clients are the same shape those policies mock, but a real-model run has
+not been performed here. If you do one, the results are interesting — the
+journal is designed to be read.
+
 Two deliberate departures are worth naming:
 
-- **The demo's model roles are deterministic policies, not language models.**
+- **The examples' model roles are deterministic policies, not language models.**
   They exist so the protocol can be exercised offline. A demo score demonstrates
   that the lifecycle runs and that memory changes behaviour; it says nothing
   about model capability, and no number in this repository is comparable to a
   benchmark result in the paper.
 - **`LocalWorkspaceEnvironment` is a convenience, not a reproduction** of the
-  paper's isolated guest. It gives up isolation for portability.
+  paper's isolated guest. It gives up isolation for portability. Read
+  [`SECURITY.md`](SECURITY.md) before pointing it at a real model.
 
 If you use the ideas here, cite the original paper.
 

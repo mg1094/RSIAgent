@@ -127,6 +127,7 @@ class RSIRunner:
         memory: MemoryBank | None = None,
         swapped_clients: RoleClients | None = None,
         user_channel=None,
+        describe_look=None,
     ) -> None:
         self.config = config
         self.task = task
@@ -141,7 +142,16 @@ class RSIRunner:
             config.run_dir / "envs",
             program_timeout_s=config.limits.program_timeout_s,
         )
-        self.actor = ActorAgent(user_channel=user_channel)
+        # `describe_look` is the seam for visual observation.  A GUI environment
+        # returns Observation(kind="image"); the callable turns that image into
+        # text the actor can read.  The bundled local environment never produces
+        # one, and Message is text-only, so this is left for a multimodal client
+        # to supply rather than faked here.
+        self.actor = ActorAgent(
+            observer=clients.observer,
+            user_channel=user_channel,
+            describe_look=describe_look,
+        )
         self.verifier = VerifierAgent(program_timeout_s=config.limits.program_timeout_s)
         self.curriculum = CurriculumAgent(max_wave_projects=config.exploration.brs_wave_width)
 
@@ -242,9 +252,9 @@ class RSIRunner:
 
         result.status = self._terminal_status(result)
         if not result.rationale:
-            result.rationale = (
-                result.phase2.rationale if result.phase2 else ""
-            ) or (result.phase1.rationale if result.phase1 else "")
+            result.rationale = (result.phase2.rationale if result.phase2 else "") or (
+                result.phase1.rationale if result.phase1 else ""
+            )
         return self._finalize(result)
 
     def _finalize(self, result: RSIResult) -> RSIResult:
@@ -255,9 +265,7 @@ class RSIRunner:
             status=result.status.value,
             memory=result.memory.as_dict(),
             score=result.score.as_dict() if result.score else None,
-            target_verdict=(
-                result.target_verdict.value if result.target_verdict else None
-            ),
+            target_verdict=(result.target_verdict.value if result.target_verdict else None),
             rationale=result.rationale,
         )
         return result

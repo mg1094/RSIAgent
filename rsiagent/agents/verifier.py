@@ -22,8 +22,8 @@ from dataclasses import dataclass
 
 from ..env.base import Environment
 from ..errors import InfrastructureFailure, ModelResponseError
-from ..prompts import verifier as verifier_prompts
 from ..parsing import parse_actor_action, parse_verdict
+from ..prompts import verifier as verifier_prompts
 from ..status import Verdict
 from .context import AgentContext
 
@@ -110,8 +110,7 @@ class VerifierAgent:
                 action = parse_actor_action(reply)
             except ModelResponseError as exc:
                 raise ModelResponseError(
-                    "verifier reply is neither a probe program nor a VERDICT: "
-                    f"{reply[:200]!r}"
+                    f"verifier reply is neither a probe program nor a VERDICT: {reply[:200]!r}"
                 ) from exc
 
             if action.kind != "program":

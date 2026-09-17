@@ -12,7 +12,8 @@ import os
 import time
 import urllib.error
 import urllib.request
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from ..errors import InfrastructureFailure
 from .base import BaseLLMClient, LLMResponse, Message, Usage
@@ -35,7 +36,9 @@ class AnthropicChatClient(BaseLLMClient):
         super().__init__()
         self.model = model
         self.name = name or model
-        self.base_url = (base_url or os.environ.get("ANTHROPIC_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
+        self.base_url = (
+            base_url or os.environ.get("ANTHROPIC_BASE_URL") or DEFAULT_BASE_URL
+        ).rstrip("/")
         self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY") or ""
         self.timeout = timeout
         self.max_retries = max_retries

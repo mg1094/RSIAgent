@@ -87,7 +87,9 @@ class ParsedVerdict:
     raw: str = ""
 
 
-def parse_verdict(text: str, *, allowed: tuple[str, ...] = ("PASS", "FAIL", "UNVERIFIED")) -> ParsedVerdict:
+def parse_verdict(
+    text: str, *, allowed: tuple[str, ...] = ("PASS", "FAIL", "UNVERIFIED")
+) -> ParsedVerdict:
     """Parse a verifier reply.
 
     The *last* verdict-shaped line wins, because a verifier that reasons out
@@ -163,8 +165,7 @@ def _coerce_project(blob: Any) -> ParsedProject:
     if not isinstance(raw_fixtures, dict):
         raise ModelResponseError("'fixtures' must be an object mapping path -> content")
     fixtures = {
-        str(k): (v if isinstance(v, str) else json.dumps(v))
-        for k, v in raw_fixtures.items()
+        str(k): (v if isinstance(v, str) else json.dumps(v)) for k, v in raw_fixtures.items()
     }
     return ParsedProject(
         id=str(blob.get("id") or f"p{abs(hash(instruction)) % 100_000:05d}"),
@@ -203,8 +204,7 @@ def _validate_handoff(handoff: ParsedHandoff) -> None:
         raise ModelResponseError(f"decision {handoff.decision} requires at least one project")
     if handoff.decision in terminal and handoff.projects:
         raise ModelResponseError(
-            f"decision {handoff.decision} must not carry projects "
-            f"(got {len(handoff.projects)})"
+            f"decision {handoff.decision} must not carry projects (got {len(handoff.projects)})"
         )
     if handoff.decision not in procuring | terminal:
         raise ModelResponseError(f"unknown curriculum decision: {handoff.decision!r}")

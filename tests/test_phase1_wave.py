@@ -15,20 +15,20 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from rsiagent.status import Decision, TerminalStatus
-
 from protocolkit import (
     SATURATED,
-    brs_events,
     RecordingActor,
     RecordingVerifier,
     always_pass,
+    brs_events,
     build_runner,
     events,
     project,
     wave,
     write_program,
 )
+
+from rsiagent.status import Decision, TerminalStatus
 
 
 def test_wave_commits_in_authored_order_and_cumulatively(tmp_path: Path):
@@ -55,9 +55,7 @@ def test_wave_commits_in_authored_order_and_cumulatively(tmp_path: Path):
 
     assert result.phase1.status is TerminalStatus.SATURATED
     commits = brs_events(journal, "memory_commit")
-    assert [c["project"] for c in commits] == ["p1", "p2"], (
-        "commits must follow the authored order"
-    )
+    assert [c["project"] for c in commits] == ["p1", "p2"], "commits must follow the authored order"
 
     # The second branch's learning saw the first branch's fact.
     assert len(actor.learning_memory_seen) >= 4  # 2 branches x (distill + reconcile)

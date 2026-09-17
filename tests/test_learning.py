@@ -65,9 +65,7 @@ def test_distillation_then_reconciliation_both_apply(tmp_path: Path):
         ]
     )
 
-    result = consolidate(
-        context, session, verdict=Verdict.PASS, findings="it worked"
-    )
+    result = consolidate(context, session, verdict=Verdict.PASS, findings="it worked")
 
     assert result.committed
     assert bank.files()["procs/bom.md"] == b"Open the northern export with utf-8-sig.\n"
@@ -113,9 +111,7 @@ def test_diagnosis_is_separate_from_memory(tmp_path: Path):
         ["ACTION: done", "ACTION: done", "Only conclusions, not reasoning.\n\nACTION: done"]
     )
 
-    result = consolidate(
-        context, bank.session(), verdict=Verdict.PASS, findings="ok"
-    )
+    result = consolidate(context, bank.session(), verdict=Verdict.PASS, findings="ok")
 
     assert result.diagnosis == "Only conclusions, not reasoning."
     assert bank.is_empty, "a diagnosis must not itself become memory"
@@ -131,9 +127,7 @@ def test_no_commit_leaves_the_bank_untouched(tmp_path: Path):
         ["```memory:write draft.md\nbody\n```\nACTION: done", "ACTION: done", "d\nACTION: done"]
     )
 
-    result = consolidate(
-        context, session, verdict=Verdict.PASS, findings="ok", commit=False
-    )
+    result = consolidate(context, session, verdict=Verdict.PASS, findings="ok", commit=False)
 
     assert not result.committed
     assert result.memory_changed, "the session itself did change"
@@ -151,9 +145,7 @@ def test_learner_may_leave_memory_unchanged(tmp_path: Path):
         ]
     )
 
-    result = consolidate(
-        context, bank.session(), verdict=Verdict.PASS, findings="ok"
-    )
+    result = consolidate(context, bank.session(), verdict=Verdict.PASS, findings="ok")
 
     assert not result.memory_changed
     assert bank.is_empty

@@ -1,0 +1,25 @@
+name: Question
+description: Ask about the protocol, the paper mapping, or how to extend it
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Questions are welcome. `docs/ARCHITECTURE.md` explains the boundaries,
+        `docs/PAPER_MAPPING.md` maps every claim to code, and
+        `examples/custom_task/` is the smallest end-to-end example.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: What you have already tried
+      description: What you read, what you ran, where it stopped making sense.
+    validations:
+      required: false

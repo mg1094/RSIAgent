@@ -17,7 +17,8 @@ import os
 import time
 import urllib.error
 import urllib.request
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from ..errors import InfrastructureFailure
 from .base import BaseLLMClient, LLMResponse, Message, Usage
@@ -43,7 +44,9 @@ class OpenAIChatClient(BaseLLMClient):
         super().__init__()
         self.model = model
         self.name = name or model
-        self.base_url = (base_url or os.environ.get("OPENAI_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
+        self.base_url = (base_url or os.environ.get("OPENAI_BASE_URL") or DEFAULT_BASE_URL).rstrip(
+            "/"
+        )
         self.api_key = api_key or os.environ.get("OPENAI_API_KEY") or ""
         self.timeout = timeout
         self.max_retries = max_retries
@@ -99,15 +102,13 @@ class OpenAIChatClient(BaseLLMClient):
         stop: Sequence[str] | None = None,
     ) -> LLMResponse:
         url = f"{self.base_url}/chat/completions"
-        data = json.dumps(
-            self._payload(messages, temperature, top_p, max_tokens, stop)
-        ).encode("utf-8")
+        data = json.dumps(self._payload(messages, temperature, top_p, max_tokens, stop)).encode(
+            "utf-8"
+        )
 
         last_error: Exception | None = None
         for attempt in range(self.max_retries):
-            request = urllib.request.Request(
-                url, data=data, headers=self._headers(), method="POST"
-            )
+            request = urllib.request.Request(url, data=data, headers=self._headers(), method="POST")
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
                     payload = json.loads(response.read().decode("utf-8"))

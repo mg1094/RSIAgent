@@ -29,7 +29,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Sequence
+from collections.abc import Sequence
 
 from rsiagent.llm import Message, RoleClients, ScriptedClient
 
@@ -97,7 +97,7 @@ def facts_from_memory(memory_text: str) -> set[str]:
 # --------------------------------------------------------------------------
 # Program templates (what the actor submits)
 # --------------------------------------------------------------------------
-PRELUDE = '''\
+PRELUDE = """\
 import csv, glob, json, os
 
 CSV_BOM = {bom!r}
@@ -145,7 +145,7 @@ def write_json(name, payload):
     with open(name, "w") as handle:
         json.dump(payload, handle, indent=2)
     print(json.dumps(payload))
-'''
+"""
 
 
 def _flags(facts: set[str]) -> dict[str, bool]:
@@ -164,7 +164,9 @@ def program_regions(facts: set[str]) -> str:
     mangled first column (BOM) from a header that never split (wrong delimiter)
     instead of guessing from the exception type alone.
     """
-    return PRELUDE.format(**_flags(facts)) + '''
+    return (
+        PRELUDE.format(**_flags(facts))
+        + """
 out = {}
 for path in sorted(glob.glob("data/*.csv")):
     name = os.path.basename(path)
@@ -179,12 +181,15 @@ for path in sorted(glob.glob("data/*.csv")):
     except Exception as exc:
         out[name] = "ERROR: " + type(exc).__name__ + ": " + str(exc)
 write_json("out/regions.json", out)
-'''
+"""
+    )
 
 
 def program_sums(facts: set[str]) -> str:
     """Practice p2/p3 — surface the delimiter, then the decimal comma."""
-    return PRELUDE.format(**_flags(facts)) + '''
+    return (
+        PRELUDE.format(**_flags(facts))
+        + """
 out = {}
 for path in sorted(glob.glob("data/*.csv")):
     name = os.path.basename(path)
@@ -204,12 +209,15 @@ for path in sorted(glob.glob("data/*.csv")):
     except Exception as exc:
         out[name] = "ERROR: " + type(exc).__name__ + ": " + str(exc)
 write_json("out/sums.json", out)
-'''
+"""
+    )
 
 
 def program_dates(facts: set[str]) -> str:
     """Practice p4 — surface the date convention."""
-    return PRELUDE.format(**_flags(facts)) + '''
+    return (
+        PRELUDE.format(**_flags(facts))
+        + """
 out = {}
 for path in sorted(glob.glob("data/*.csv")):
     name = os.path.basename(path)
@@ -219,12 +227,15 @@ for path in sorted(glob.glob("data/*.csv")):
     except Exception as exc:
         out[name] = "ERROR: " + type(exc).__name__ + ": " + str(exc)
 write_json("out/dates.json", out)
-'''
+"""
+    )
 
 
 def program_report(facts: set[str]) -> str:
     """The target: build out/report.json."""
-    return PRELUDE.format(**_flags(facts)) + '''
+    return (
+        PRELUDE.format(**_flags(facts))
+        + """
 totals = {}
 months = []
 parsed = 0
@@ -250,7 +261,8 @@ write_json("out/report.json", {
     "source_files": parsed,
     "total_by_region": totals,
 })
-'''
+"""
+    )
 
 
 # --------------------------------------------------------------------------
@@ -261,7 +273,7 @@ PROJECTS = {
         "instruction": (
             "For every CSV under `data/`, report the distinct values of its "
             "`region` column. Write `out/regions.json` mapping each filename to "
-            "a sorted list of regions, or to an \"ERROR: ...\" string if the "
+            'a sorted list of regions, or to an "ERROR: ..." string if the '
             "file cannot be read."
         ),
         "program": program_regions,
@@ -272,7 +284,7 @@ PROJECTS = {
         "instruction": (
             "For every CSV under `data/`, sum the `amount` column. Write "
             "`out/sums.json` mapping each filename to an object with `rows` and "
-            "`total`, or to an \"ERROR: ...\" string if any amount is "
+            '`total`, or to an "ERROR: ..." string if any amount is '
             "unparseable."
         ),
         "program": program_sums,
@@ -420,6 +432,7 @@ class VerifierPolicy:
                 if spec["marker"] in request:
                     watch = spec["watch"]
                     break
+        report_line = f"print(json.dumps({{'watch': {watch!r}, 'artifacts': out}}, indent=2))\n"
         return (
             "import json, os\n"
             "out = {}\n"
@@ -427,8 +440,7 @@ class VerifierPolicy:
             "    path = 'out/' + name + '.json'\n"
             "    if os.path.exists(path):\n"
             "        out[name] = json.load(open(path))\n"
-            "print(json.dumps({'watch': %r, 'artifacts': out}, indent=2))\n" % watch
-        )
+        ) + report_line
 
     def _verdict_from_probe(self, last: str) -> str:
         try:
@@ -504,10 +516,7 @@ class VerifierPolicy:
                     "thousands separator and ',' is the decimal comma, as in "
                     "'1.234,56'. Strip '.' and replace ',' with '.' before float()."
                 )
-            return (
-                "VERDICT: FAIL\n"
-                f"FINDINGS: {name} could not be read: {entry}."
-            )
+            return f"VERDICT: FAIL\nFINDINGS: {name} could not be read: {entry}."
 
         for name in sorted(payload):
             entry = payload[name]
@@ -545,8 +554,7 @@ class VerifierPolicy:
     def _judge_report(payload) -> str:
         if not isinstance(payload, dict):
             return (
-                "VERDICT: FAIL\n"
-                "FINDINGS: out/report.json was not produced or is not a JSON object."
+                "VERDICT: FAIL\nFINDINGS: out/report.json was not produced or is not a JSON object."
             )
         required = {"month", "source_files", "total_by_region"}
         missing = required - set(payload)

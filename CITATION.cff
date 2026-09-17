@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: >-
+  This repository is an independent reimplementation of the framework described
+  in the paper below. If you are using the ideas, please cite the paper. If you
+  are referring to this software specifically, cite both.
+title: "RSIAgent: an independent reimplementation"
+abstract: >-
+  A training-free, multi-agent framework for recursive self-improvement in new
+  environments. A Curriculum Agent, an Actor Agent, and a Verifier Agent
+  recursively explore an unfamiliar environment and consolidate what they learn
+  into reusable memory, without updating model weights. Implements the reference
+  lifecycle (Algorithm A1) and stage-ablation protocol of arXiv:2609.15364,
+  decoupled from the original's QEMU/Docker benchmark harness.
+type: software
+license: Apache-2.0
+repository-code: "https://github.com/OWNER/RSIAgent"
+url: "https://github.com/OWNER/RSIAgent"
+keywords:
+  - recursive self-improvement
+  - digital agents
+  - computer use
+  - agentic memory
+  - autonomous exploration
+  - code-as-policy
+version: 0.1.0
+date-released: "2026-09-17"
+
+preferred-citation:
+  type: article
+  title: >-
+    RSIAgent: Autonomous Exploration for Recursive Self-improvement in New
+    Environments
+  authors:
+    - family-names: Zhu
+      given-names: Sibo
+    - family-names: Fan
+      given-names: Shicheng
+    - family-names: Wang
+      given-names: Xinyue
+    - family-names: Wu
+      given-names: Wenyi
+    - family-names: Zhou
+      given-names: Kun
+    - family-names: Huang
+      given-names: Biwei
+  year: 2026
+  eprint: 2609.15364
+  archive-prefix: arXiv
+  primary-class: cs.AI
+  url: "https://arxiv.org/abs/2609.15364"

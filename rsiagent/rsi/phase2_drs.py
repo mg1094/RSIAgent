@@ -182,8 +182,11 @@ class DeepRefiner:
                     )
                     return self._finish(result)
                 attempt = self._attempt_target(
-                    task, target_actor, target_verifier,
-                    cycle_index=cycle_index, memory_text=self.memory.render(),
+                    task,
+                    target_actor,
+                    target_verifier,
+                    cycle_index=cycle_index,
+                    memory_text=self.memory.render(),
                 )
                 learning = self._consolidate_target(attempt, target_actor, cycle_index)
                 cycle = TargetCycle(index=cycle_index, attempt=attempt, learning=learning)
@@ -201,8 +204,11 @@ class DeepRefiner:
             # --- STALLED buys one final target attempt ----------------------
             if review.decision is Decision.STALLED:
                 final = self._attempt_target(
-                    task, target_actor, target_verifier,
-                    cycle_index=cycle_index + 1, memory_text=self.memory.render(),
+                    task,
+                    target_actor,
+                    target_verifier,
+                    cycle_index=cycle_index + 1,
+                    memory_text=self.memory.render(),
                 )
                 self._consolidate_target(final, target_actor, cycle_index + 1)
                 result.final_attempt = final
@@ -218,8 +224,7 @@ class DeepRefiner:
             ):
                 result.status = TerminalStatus.BUDGET_EXHAUSTED
                 result.rationale = (
-                    f"reached drs_max_practice_projects="
-                    f"{exploration.drs_max_practice_projects}"
+                    f"reached drs_max_practice_projects={exploration.drs_max_practice_projects}"
                 )
                 return self._finish(result)
 

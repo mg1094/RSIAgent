@@ -21,7 +21,8 @@ from pathlib import Path
 from .config import RunConfig, load_config
 from .env.pool import LocalEnvironmentPool
 from .errors import RSIAgentError
-from .llm.factory import build_clients
+from .llm.factory import RoleClients, build_clients
+from .llm.scripted import ScriptedClient
 from .memory.bank import MemoryBank
 from .rsi.protocol import RSIRunner, run_baseline
 from .runtime.journal import Journal, read_journal
@@ -80,6 +81,47 @@ def _resolve_evaluator(spec: str | None) -> Evaluator:
     return evaluator
 
 
+def _resolve_clients(spec: str | None, config: RunConfig, provider: str) -> RoleClients:
+    """Build the role clients, optionally from a user-supplied policy module.
+
+    ``--policies path/to/policies.py:attribute`` accepts either a ready
+    :class:`RoleClients` or a plain mapping::
+
+        policies = {
+            "actor": lambda messages: "```python\\n...\\n```",
+            "verifier": lambda messages: "VERDICT: PASS\\nFINDINGS: ...",
+            "curriculum": lambda messages: '{"decision": "SATURATED", ...}',
+        }
+
+    The mapping form is the one to reach for when experimenting: it lets the
+    whole lifecycle run offline, with no API key, against a real environment.
+    """
+    if spec is None:
+        return build_clients(config, provider=provider)
+
+    supplied = _load_object(spec)
+    if isinstance(supplied, RoleClients):
+        return supplied
+    if isinstance(supplied, dict):
+        missing = {"actor", "verifier", "curriculum"} - set(supplied)
+        if missing:
+            raise RSIAgentError(f"--policies mapping is missing: {sorted(missing)}")
+        return RoleClients(
+            actor=ScriptedClient(supplied["actor"], name="policies:actor"),
+            verifier=ScriptedClient(supplied["verifier"], name="policies:verifier"),
+            curriculum=ScriptedClient(supplied["curriculum"], name="policies:curriculum"),
+            observer=(
+                ScriptedClient(supplied["observer"], name="policies:observer")
+                if supplied.get("observer")
+                else None
+            ),
+        )
+    raise RSIAgentError(
+        "--policies must resolve to a RoleClients or a mapping with "
+        "actor/verifier/curriculum entries"
+    )
+
+
 # --------------------------------------------------------------------------
 def cmd_demo(args: argparse.Namespace) -> int:
     """Run the bundled offline demo.
@@ -107,7 +149,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         config = dataclasses.replace(config, enable_memory=False, memory_writeback=False)
     config.run_dir.mkdir(parents=True, exist_ok=True)
 
-    clients = build_clients(config, provider=args.provider)
+    clients = _resolve_clients(args.policies, config, args.provider)
     env_factory = LocalEnvironmentPool(
         config.run_dir / "envs", program_timeout_s=config.limits.program_timeout_s
     )
@@ -186,7 +228,9 @@ def _narrator(quiet: bool):
             return
         detail = event.data
         if event.event == "curriculum_handoff":
-            print(f"[{event.phase}] curriculum -> {detail['decision']} {detail.get('projects', '')}")
+            print(
+                f"[{event.phase}] curriculum -> {detail['decision']} {detail.get('projects', '')}"
+            )
         elif event.event in ("project_verdict", "practice_verdict"):
             print(f"  {detail.get('project')}: {detail.get('verdict')}")
         elif event.event == "target_verdict":
@@ -284,7 +328,9 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command")
 
     demo = sub.add_parser("demo", help="run the offline demo (no API key needed)")
-    demo.add_argument("--arm", default="all", choices=("baseline", "rsi", "brs-only", "drs-only", "all"))
+    demo.add_argument(
+        "--arm", default="all", choices=("baseline", "rsi", "brs-only", "drs-only", "all")
+    )
     demo.add_argument("--out", type=Path, default=Path("runs/offline_demo"))
     demo.set_defaults(func=cmd_demo)
 
@@ -295,6 +341,11 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--arm", default="rsi", choices=tuple(STAGE_SETS))
     run.add_argument("--out", default="runs/latest", help="run directory (without --config)")
     run.add_argument("--provider", default="auto", choices=("auto", "openai", "anthropic"))
+    run.add_argument(
+        "--policies",
+        default=None,
+        help="path/to/policies.py:attribute supplying role clients; runs offline",
+    )
     run.add_argument("--actor-model", default="glm-5.3")
     run.add_argument("--verifier-model", default="kimi-k3")
     run.add_argument("--curriculum-model", default="kimi-k3")
@@ -309,7 +360,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     memory = sub.add_parser("memory", help="print a run's memory")
     memory.add_argument("run_dir")
-    memory.add_argument("--live", action="store_true", help="show canonical memory, not the frozen copy")
+    memory.add_argument(
+        "--live", action="store_true", help="show canonical memory, not the frozen copy"
+    )
     memory.set_defaults(func=cmd_memory)
 
     validate = sub.add_parser("validate", help="check a run configuration")

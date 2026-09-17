@@ -26,10 +26,10 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 
+from ..agents.actor import ActorAgent
 from ..agents.context import AgentContext
 from ..agents.curriculum import CurriculumAgent, Handoff, OutcomeSummary
 from ..agents.verifier import VerifierAgent
-from ..agents.actor import ActorAgent
 from ..config import RunConfig
 from ..env.base import Environment
 from ..env.pool import EnvironmentFactory
@@ -252,12 +252,9 @@ class BroadExplorer:
         unresolved = [b for b in branches if not b.grounded]
         if unresolved and self.config.exploration.brs_on_blocked == "halt":
             wave.blocked = True
-            wave.block_reason = (
-                "wave blocked by unresolved branch(es): "
-                + ", ".join(
-                    f"{b.project.id}({b.error or (b.verdict.value if b.verdict else 'no verdict')})"
-                    for b in unresolved
-                )
+            wave.block_reason = "wave blocked by unresolved branch(es): " + ", ".join(
+                f"{b.project.id}({b.error or (b.verdict.value if b.verdict else 'no verdict')})"
+                for b in unresolved
             )
             self.journal.log(
                 "wave_blocked",
@@ -295,9 +292,7 @@ class BroadExplorer:
         )
         return wave
 
-    def _prepare_branch(
-        self, index: int, project: Project, pre_wave: MemorySnapshot
-    ) -> Branch:
+    def _prepare_branch(self, index: int, project: Project, pre_wave: MemorySnapshot) -> Branch:
         label = f"w{index}-{project.id}"
         environment = self.env_factory(label)
         provision(environment, project.fixtures, reset=True)
@@ -334,11 +329,11 @@ class BroadExplorer:
 
     def _run_branch(self, branch: Branch) -> None:
         """Work and verify one project.  Never raises for agent-level faults."""
-        label = branch.project.label()
         self.journal.log(
             "project_start",
             phase=Phase.BRS.value,
             project=branch.project.id,
+            wave=branch.project.wave,
             instruction=branch.project.instruction,
         )
         try:
@@ -386,8 +381,7 @@ class BroadExplorer:
             "Other projects finished while you worked. The memory below is the "
             "current canonical state, including updates from them; it may differ "
             "from the snapshot you started with. Reconcile against this, not "
-            "against your starting copy.\n\n"
-            + session.render(),
+            "against your starting copy.\n\n" + session.render(),
         )
         try:
             branch.learning = consolidate(

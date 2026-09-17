@@ -19,8 +19,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from ..prompts import curriculum as curriculum_prompts
 from ..parsing import ParsedHandoff, parse_handoff
+from ..prompts import curriculum as curriculum_prompts
 from ..status import Decision
 from .context import AgentContext
 
@@ -85,9 +85,7 @@ class CurriculumAgent:
         enforces the numeric boundary between waves.
         """
         budget = max_projects or self.max_wave_projects
-        rendered_outcomes = (
-            "\n".join(o.render() for o in outcomes) if outcomes else "(none yet)"
-        )
+        rendered_outcomes = "\n".join(o.render() for o in outcomes) if outcomes else "(none yet)"
         prompt = curriculum_prompts.brs_context(
             target_query=target_query,
             memory=memory_view or "(memory is empty)",

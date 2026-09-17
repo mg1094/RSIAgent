@@ -10,8 +10,9 @@ context.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Any, Literal, Protocol, Sequence, runtime_checkable
+from typing import Any, Literal, Protocol, runtime_checkable
 
 Role = Literal["system", "user", "assistant"]
 
@@ -34,7 +35,7 @@ class Usage:
     def total_tokens(self) -> int:
         return self.prompt_tokens + self.completion_tokens
 
-    def __add__(self, other: "Usage") -> "Usage":
+    def __add__(self, other: Usage) -> Usage:
         return Usage(
             self.prompt_tokens + other.prompt_tokens,
             self.completion_tokens + other.completion_tokens,

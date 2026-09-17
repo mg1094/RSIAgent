@@ -9,7 +9,7 @@ scripted run reproduces the protocol, never the reported benchmark scores.
 from __future__ import annotations
 
 from collections import deque
-from typing import Callable, Iterable, Sequence
+from collections.abc import Callable, Iterable, Sequence
 
 from .base import BaseLLMClient, LLMResponse, Message, Usage
 

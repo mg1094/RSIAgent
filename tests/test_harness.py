@@ -7,7 +7,8 @@ so none of your in-VM effects enter the scored state."
 
 from __future__ import annotations
 
-from typing import Callable, Sequence
+from collections.abc import Callable, Sequence
+from pathlib import Path
 
 from rsiagent.agents.actor import ActorAgent
 from rsiagent.agents.context import ContextFactory
@@ -41,9 +42,7 @@ def reader() -> str:
 
 
 def actor_context(handler: Callable[[Sequence], str]):
-    return ContextFactory(
-        ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor"
-    )()
+    return ContextFactory(ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor")()
 
 
 def verifier_context(handler: Callable[[Sequence], str]):
@@ -105,7 +104,9 @@ def test_verifier_probes_are_rolled_back(
     provision(workspace, simple_task.fixtures, reset=True)
 
     probe = reader() + "open('out/answer.txt','w').write('PROBE WAS HERE')"
-    judge = lambda out: ("PASS", "out/answer.txt contains 42.")
+
+    def judge(out: str) -> tuple[str, str]:
+        return "PASS", "out/answer.txt contains 42."
 
     result = _attempt(
         harness,
@@ -264,9 +265,7 @@ def test_actor_receives_memory_and_can_look(
         return "ACTION: done\nSUMMARY: looked around"
 
     ActorAgent().run(
-        ContextFactory(
-            ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor"
-        )(),
+        ContextFactory(ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor")(),
         workspace,
         instruction=simple_task.instruction,
         memory_text="### env/notes.md\nUse utf-8-sig.",
@@ -291,9 +290,7 @@ def test_unavailable_user_channel_is_reported_honestly(
         return "ACTION: done\nSUMMARY: no user available"
 
     ActorAgent(user_channel=None).run(
-        ContextFactory(
-            ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor"
-        )(),
+        ContextFactory(ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor")(),
         workspace,
         instruction=simple_task.instruction,
         memory_text=None,
@@ -309,3 +306,63 @@ def test_work_phase_isolation(workspace: LocalWorkspaceEnvironment):
 
     assert set(workspace.list_files()) == {"visible.txt"}
     assert not workspace.exists("reasoning/notes.txt")
+
+
+def test_visual_observation_seam(workspace: LocalWorkspaceEnvironment):
+    """A GUI environment returns an image; `describe_look` turns it into text.
+
+    The bundled local environment is text-only, so this exercises the seam
+    directly: an environment that reports an image, and a describer that the
+    actor is expected to route it through.
+    """
+    from rsiagent.env.base import Environment, ExecResult, Observation
+
+    class GuiEnvironment(Environment):
+        name = "stub-gui"
+
+        def reset(self) -> None: ...
+        def execute(self, program, *, kind="python", timeout=None) -> ExecResult:
+            return ExecResult(program=program, kind=kind)
+
+        def observe(self, hint: str = "") -> Observation:
+            return Observation(kind="image", image_path=Path("/tmp/screen.png"))
+
+        def list_files(self, subdir: str = "") -> list[str]:
+            return []
+
+        def read_bytes(self, relpath: str) -> bytes:
+            return b""
+
+        def exists(self, relpath: str) -> bool:
+            return False
+
+        def write_fixture(self, relpath, content) -> None: ...
+        def snapshot(self, label: str) -> str:
+            return "cp"
+
+        def restore(self, checkpoint_id: str) -> None: ...
+        def discard(self, checkpoint_id: str) -> None: ...
+
+    seen: list[str] = []
+
+    def handler(messages):
+        seen.append(messages[-1].content)
+        if len(seen) == 1:
+            return "ACTION: look\nHINT: the canvas"
+        return "ACTION: done\nSUMMARY: saw it"
+
+    described: list[str] = []
+
+    def describe(image_path: str) -> str:
+        described.append(image_path)
+        return "A dark canvas with a single white 42 in the centre."
+
+    ActorAgent(describe_look=describe).run(
+        ContextFactory(ScriptedClient(handler), actor_prompts.ACTOR_SYSTEM, role="actor")(),
+        GuiEnvironment(),
+        instruction="Read the number on screen.",
+        memory_text=None,
+    )
+
+    assert described == ["/tmp/screen.png"], "the describer must receive the image path"
+    assert "A dark canvas with a single white 42" in seen[1]

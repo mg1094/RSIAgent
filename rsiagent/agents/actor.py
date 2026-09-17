@@ -10,13 +10,13 @@ RSIAgent happens *around* the actor, in the curriculum and the memory.
 from __future__ import annotations
 
 import time
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Callable
 
 from ..env.base import Environment, ExecResult
 from ..errors import ModelResponseError
-from ..prompts import actor as actor_prompts
 from ..parsing import ActorAction, parse_actor_action, parse_memory_edits
+from ..prompts import actor as actor_prompts
 from .context import AgentContext
 
 UserChannel = Callable[[str], str]

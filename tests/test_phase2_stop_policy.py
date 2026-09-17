@@ -15,8 +15,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from rsiagent.status import TerminalStatus, Verdict
-
 from protocolkit import (
     READY,
     STALLED,
@@ -28,6 +26,8 @@ from protocolkit import (
     project,
     write_program,
 )
+
+from rsiagent.status import TerminalStatus, Verdict
 
 DRS_ONLY = frozenset({"drs", "eval"})
 
@@ -112,9 +112,7 @@ def test_practice_after_a_pass_forces_another_target_attempt(tmp_path: Path):
     result = runner.run()
 
     assert result.phase2.practice_projects == ["p1"]
-    assert len(result.phase2.cycles) == 2, (
-        "a target PASS followed by practice must be re-attempted"
-    )
+    assert len(result.phase2.cycles) == 2, "a target PASS followed by practice must be re-attempted"
     assert result.phase2.status is TerminalStatus.COMPLETED
 
 
@@ -182,9 +180,9 @@ def test_unverified_target_grounds_no_learning(tmp_path: Path):
 
     assert result.phase2.status is TerminalStatus.UNVERIFIED
     assert result.status is TerminalStatus.UNVERIFIED
-    assert not [
-        c for c in events(journal, "memory_commit") if c.get("unit") == "target"
-    ], "an unresolved outcome must not be consolidated"
+    assert not [c for c in events(journal, "memory_commit") if c.get("unit") == "target"], (
+        "an unresolved outcome must not be consolidated"
+    )
     assert memory.is_empty
 
 
@@ -219,7 +217,7 @@ def test_curriculum_review_after_practice_sees_the_practice_outcome(tmp_path: Pa
     )
     runner.config = runner.config.replace(stages=DRS_ONLY)
 
-    result = runner.run()
+    runner.run()
 
     reviews = events(journal, "curriculum_review")
     assert len(reviews) >= 2
@@ -228,8 +226,7 @@ def test_curriculum_review_after_practice_sees_the_practice_outcome(tmp_path: Pa
     second_prompt = runner.clients.curriculum.transcript[1][0][-1].content
     assert "practice:p1" in second_prompt, "the review must name the practice unit"
     assert "**Verdict:** PASS" in second_prompt, (
-        "the review after practice must see the practice's verdict, not the "
-        "older target attempt's"
+        "the review after practice must see the practice's verdict, not the older target attempt's"
     )
 
 

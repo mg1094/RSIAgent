@@ -15,8 +15,13 @@ class RoleClients:
     """One client per role.
 
     ``observer`` is optional and only consulted when the actor issues a ``look``
-    action.  The paper's reference configuration binds visual observations to
-    the same model as the verifier agent.
+    action against an environment that returns an image.  The paper's reference
+    configuration binds visual observations to the same model as the verifier
+    agent, and this field mirrors that binding.
+
+    Note the limit: :class:`~rsiagent.llm.base.Message` is text-only, so there
+    is no multimodal transport here.  A GUI environment needs a client that can
+    carry an image, wired in through ``RSIRunner(describe_look=...)``.
     """
 
     actor: LLMClient

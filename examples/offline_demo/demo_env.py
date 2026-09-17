@@ -45,17 +45,11 @@ SALES_NORTH = (
 )
 
 SALES_SOUTH = (
-    "region;date;amount\n"
-    "south;03/03/2026;210.00\n"
-    "south;15/03/2026;95.50\n"
-    "south;28/03/2026;33.25\n"
+    "region;date;amount\nsouth;03/03/2026;210.00\nsouth;15/03/2026;95.50\nsouth;28/03/2026;33.25\n"
 )
 
 SALES_EAST = (
-    "region;date;amount\n"
-    "east;07/03/2026;1.234,56\n"
-    "east;21/03/2026;500,00\n"
-    "east;26/03/2026;75,50\n"
+    "region;date;amount\neast;07/03/2026;1.234,56\neast;21/03/2026;500,00\neast;26/03/2026;75,50\n"
 )
 
 README = """\

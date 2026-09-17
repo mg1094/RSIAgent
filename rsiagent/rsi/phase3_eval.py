@@ -97,9 +97,7 @@ class FrozenMemoryEvaluator:
             path=str(frozen.path),
             **frozen.stats.as_dict(),
         )
-        self.journal.log_memory(
-            frozen.stats, phase=Phase.EVAL.value, label="frozen", kind="freeze"
-        )
+        self.journal.log_memory(frozen.stats, phase=Phase.EVAL.value, label="frozen", kind="freeze")
 
         # A read-only bank over the frozen bytes.  Any write attempt raises
         # rather than silently succeeding, so "no writeback" is testable.
@@ -126,9 +124,7 @@ class FrozenMemoryEvaluator:
         except InfrastructureFailure as exc:
             result.status = TerminalStatus.INFRASTRUCTURE_FAILURE
             result.rationale = f"evaluation attempt failed: {exc.reason}"
-            self.journal.log(
-                "evaluation_failed", phase=Phase.EVAL.value, error=exc.reason
-            )
+            self.journal.log("evaluation_failed", phase=Phase.EVAL.value, error=exc.reason)
             return result
 
         result.attempt = attempt
@@ -163,9 +159,7 @@ class FrozenMemoryEvaluator:
             result.integrity_error = str(exc)
             result.status = TerminalStatus.INFRASTRUCTURE_FAILURE
             result.rationale = "frozen memory was modified during evaluation"
-            self.journal.log(
-                "memory_integrity_violation", phase=Phase.EVAL.value, error=str(exc)
-            )
+            self.journal.log("memory_integrity_violation", phase=Phase.EVAL.value, error=str(exc))
             return result
 
         result.status = TerminalStatus.COMPLETED

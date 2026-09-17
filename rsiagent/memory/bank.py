@@ -57,9 +57,7 @@ def _iter_files(root: Path) -> list[Path]:
     if not root.exists():
         return []
     return sorted(
-        p
-        for p in root.rglob("*")
-        if p.is_file() and not any(part in _IGNORED for part in p.parts)
+        p for p in root.rglob("*") if p.is_file() and not any(part in _IGNORED for part in p.parts)
     )
 
 
@@ -154,7 +152,7 @@ class MemorySession:
     discarded before learning" a structural property rather than a convention.
     """
 
-    def __init__(self, bank: "MemoryBank", path: Path, base: MemorySnapshot | None) -> None:
+    def __init__(self, bank: MemoryBank, path: Path, base: MemorySnapshot | None) -> None:
         self._bank = bank
         self.path = path
         self.base = base
@@ -223,7 +221,7 @@ class MemorySession:
         self._closed = True
         shutil.rmtree(self.path, ignore_errors=True)
 
-    def __enter__(self) -> "MemorySession":
+    def __enter__(self) -> MemorySession:
         return self
 
     def __exit__(self, *exc: object) -> None:
@@ -253,9 +251,7 @@ class MemoryBank:
         return compute_stats(self.root).tree_hash
 
     def files(self) -> dict[str, bytes]:
-        return {
-            p.relative_to(self.root).as_posix(): p.read_bytes() for p in _iter_files(self.root)
-        }
+        return {p.relative_to(self.root).as_posix(): p.read_bytes() for p in _iter_files(self.root)}
 
     def render(self, *, limit_bytes: int = 120_000) -> str:
         return render_memory(self.root, limit_bytes=limit_bytes)

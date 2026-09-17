@@ -9,8 +9,8 @@ benchmark run takes.
 from __future__ import annotations
 
 import json
+from collections.abc import Callable, Iterable, Sequence
 from pathlib import Path
-from typing import Callable, Iterable, Sequence
 
 from rsiagent.config import ExecutionLimits, ExplorationConfig, RoleModelConfig, RunConfig
 from rsiagent.env.pool import LocalEnvironmentPool
@@ -56,9 +56,7 @@ def wave(*projects: tuple[str, str]) -> str:
         {
             "decision": "PROJECTS",
             "rationale": "test wave",
-            "projects": [
-                {"id": pid, "instruction": instruction} for pid, instruction in projects
-            ],
+            "projects": [{"id": pid, "instruction": instruction} for pid, instruction in projects],
         }
     )
 
@@ -124,9 +122,7 @@ class RecordingActor:
             self.learning_memory_seen.append(memory)
             self.distillations.append(last)
             edits = self.memory_edit_for(memory, last) if self.memory_edit_for else {}
-            blocks = [
-                f"```memory:write {path}\n{body}\n```" for path, body in edits.items()
-            ]
+            blocks = [f"```memory:write {path}\n{body}\n```" for path, body in edits.items()]
             blocks.append("ACTION: done\nSUMMARY: consolidated")
             return "\n\n".join(blocks)
 

@@ -23,12 +23,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from ..agents.context import AgentContext
 from ..errors import UnverifiedOutcome
 from ..memory.bank import MemorySession, MemoryStats
-from ..prompts import learning as learning_prompts
 from ..parsing import parse_diagnosis, parse_memory_edits
+from ..prompts import learning as learning_prompts
 from ..status import Verdict
-from ..agents.context import AgentContext
 
 
 @dataclass
@@ -76,9 +76,7 @@ def consolidate(
     learning example."
     """
     if not verdict.grounded:
-        raise UnverifiedOutcome(
-            "refusing to consolidate an unresolved outcome", findings=findings
-        )
+        raise UnverifiedOutcome("refusing to consolidate an unresolved outcome", findings=findings)
 
     result = LearningResult(verdict=verdict, stats_before=session.stats())
 

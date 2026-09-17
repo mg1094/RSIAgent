@@ -14,23 +14,22 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import shutil
-from pathlib import Path
 
 # Allow running this file directly, without installing the package.
 import sys
+from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(_HERE.parents[1]))  # repo root, for `rsiagent`
 sys.path.insert(0, str(_HERE.parent))  # examples/, for `offline_demo`
 
+from offline_demo.demo_env import TASK, build_evaluator
+from offline_demo.offline_llm import build_clients
 from rsiagent.config import ExecutionLimits, ExplorationConfig, RoleModelConfig, RunConfig
 from rsiagent.env.pool import LocalEnvironmentPool
 from rsiagent.memory.bank import MemoryBank
 from rsiagent.rsi.protocol import RSIRunner, run_baseline
 from rsiagent.runtime.journal import Journal
-
-from offline_demo.demo_env import TASK, build_evaluator
-from offline_demo.offline_llm import build_clients
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -170,13 +169,16 @@ def memory_stats_line(result) -> str:
 
 def _print_event(name: str, data: dict) -> None:
     if name == "curriculum_handoff":
-        print(f"  [curriculum] wave {data['wave']}: {data['decision']} "
-              f"{data.get('projects') or ''}")
+        print(
+            f"  [curriculum] wave {data['wave']}: {data['decision']} {data.get('projects') or ''}"
+        )
     elif name == "project_start":
         print(f"    [project] {data['project']}")
     elif name == "project_verdict":
-        print(f"    [verdict] {data['project']}: {data['verdict']} "
-              f"({data.get('programs', 0)} programs)")
+        print(
+            f"    [verdict] {data['project']}: {data['verdict']} "
+            f"({data.get('programs', 0)} programs)"
+        )
     elif name == "wave_committed":
         print(f"  [wave {data['wave']}] committed {data['committed']}")
     elif name == "target_verdict":
@@ -190,8 +192,10 @@ def _print_event(name: str, data: dict) -> None:
     elif name == "memory_frozen":
         print(f"  [frozen] {data['file_count']} files, hash {data['tree_hash'][:12]}")
     elif name == "official_score":
-        print(f"  [official score] partial={data['partial']:.4f} "
-              f"binary={data['binary']} (agent verdict {data['agent_verdict']})")
+        print(
+            f"  [official score] partial={data['partial']:.4f} "
+            f"binary={data['binary']} (agent verdict {data['agent_verdict']})"
+        )
 
 
 def main() -> int:
@@ -222,13 +226,17 @@ def main() -> int:
 
     if args.arm in ("brs-only", "ablation", "all"):
         banner("ARM: w/o DRS — evaluate the memory Broad exploration acquired, as-is")
-        result = run_rsi_arm(build_config(out / "brs_only", stages=ARMS["brs-only"][0]), trace=False)
+        result = run_rsi_arm(
+            build_config(out / "brs_only", stages=ARMS["brs-only"][0]), trace=False
+        )
         print(result.summary())
         scores[ARMS["brs-only"][1]] = result.partial
 
     if args.arm in ("drs-only", "ablation", "all"):
         banner("ARM: w/o BRS — Deep exploration starting from empty memory")
-        result = run_rsi_arm(build_config(out / "drs_only", stages=ARMS["drs-only"][0]), trace=False)
+        result = run_rsi_arm(
+            build_config(out / "drs_only", stages=ARMS["drs-only"][0]), trace=False
+        )
         print(result.summary())
         scores[ARMS["drs-only"][1]] = result.partial
 

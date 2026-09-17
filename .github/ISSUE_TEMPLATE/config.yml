@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: The paper
+    url: https://arxiv.org/abs/2609.15364
+    about: RSIAgent — Autonomous Exploration for Recursive Self-improvement in New Environments
+  - name: Architecture notes
+    url: https://github.com/OWNER/RSIAgent/blob/main/docs/ARCHITECTURE.md
+    about: The role boundaries and why each is enforced structurally
