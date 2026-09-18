@@ -319,52 +319,14 @@ examples.
 
 ---
 
-## Related work
-
-Two neighbouring lines of work are worth naming, plus one pointer. Only the
-first is implemented here.
-
-**RSIAgent** — Zhu, Fan, Wang, Wu, Zhou, Huang.
-*RSIAgent: Autonomous Exploration for Recursive Self-improvement in New
-Environments.* [arXiv:2609.15364](https://arxiv.org/abs/2609.15364), 2026.
-[Website](https://aetherlabsai.github.io/RSIAgent/).
-
-> **This is what the code in this repository implements.** Three agents —
-> curriculum, actor, verifier — explore a new environment under a
-> broad-then-deep strategy, check what they learn against execution, and freeze
-> the resulting memory for downstream tasks. Model weights never change.
-
-**Dream-RSI** — Zheng, Wu, Zhang, He, Zhang, Coleman, Wei, Bai, Liu, Liu, Wang,
-Zhuan, Kang, Xiang, Huang, Cheng, Guo.
-*Dream-RSI: Recursive Self-Improvement through Evolving Worlds.* 2026.
-[Website](https://dream-rsi.com/).
-
-> **Not implemented here.** The two improve different objects. RSIAgent improves
-> the *agent's knowledge of the environment* by accumulating memory. Dream-RSI
-> improves the *exploration procedure itself*: a completed discovery tree is
-> reused as an exact replay simulator over the search space it already reached,
-> so thousands of candidate policies can be scored offline at zero executions,
-> and only the winner is redeployed. One learns what the environment is like;
-> the other learns how to search it.
-
-**Retrieve-for-Train** — Google Research.
-*Bypassing inference bottlenecks: accelerating complex AI search with
-Retrieve-for-Train.*
-[Blog post](https://research.google/blog/bypassing-inference-bottlenecks-accelerating-complex-ai-search-with-retrieve-for-train/).
-
-> **Not implemented here, and not summarised here** — listed as a pointer to a
-> related approach to making search-based discovery cheaper. Consult the post
-> itself; this repository makes no claims about its method.
-
----
-
 ## Provenance
 
 This is an independent reimplementation of the framework in:
 
 > Sibo Zhu, Shicheng Fan, Xinyue Wang, Wenyi Wu, Kun Zhou, Biwei Huang.
 > *RSIAgent: Autonomous Exploration for Recursive Self-improvement in New
-> Environments.* arXiv:2609.15364, 2026.
+> Environments.* [arXiv:2609.15364](https://arxiv.org/abs/2609.15364), 2026.
+> [Project website](https://aetherlabsai.github.io/RSIAgent/).
 
 It was written from the paper, the project website, and the authors' public
 documentation of the architecture. No source code from the reference
